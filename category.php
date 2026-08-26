@@ -1,15 +1,33 @@
 <?php
 
 require_once "header.php";
-
+require_once "connection.php";
+if(!isset($_SESSION['auth'])){
+    header("location: login.php");
+}
+if(!empty($_POST))
+{
+    $name = $_POST['name'];
+    $sql="INSERT INTO category(name) values('$name')";
+    $result=mysqli_query($conn,$sql);
+    if($result)
+        {
+        echo"category add successfully";
+        }
+        else
+        {
+        echo"category  not add successfully";
+        }
+    
+}
 ?>
 
 
 <h1>welcome to our category section</h1>
-<p>
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque ipsum a cum nemo nihil amet expedita, quos esse incidunt enim,
-     voluptatum hic illum modi. Rem aspernatur saepe officia natus quaerat!
-</p>
+<form action="" method="post">
+Name: <input type="text" name="name" required><br>
+<button>add category</button>
+</form>
 
 
 <?php

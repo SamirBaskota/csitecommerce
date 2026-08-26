@@ -1,19 +1,46 @@
 <?php
 
 require_once "header.php";
+require_once 'connection.php';
 
 ?>
 
 
 <h1>welcome to our login section</h1>
-<p>
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque ipsum a cum nemo nihil amet expedita, quos esse incidunt enim,
-     voluptatum hic illum modi. Rem aspernatur saepe officia natus quaerat!
-</p>
-
-
 <?php
 
-require_once "footer.php";
+if(!empty($_POST)){
+    $email = $_POST['email'];
+    $password = md5($_POST['password']);
 
+    $query = "SELECT * FROM users WHERE email='$email' AND password='$password'";
+    $result = mysqli_query($conn, $query);
+    print_r($result); 
+if(mysqli_num_rows($result) > 0){
+    $user = mysqli_fetch_assoc($result);
+    $_SESSION['auth'] = $user;
+    header("Location:dashboard.php");
+    echo "login successful";
+} else
+{
+    echo "invalid email or password";
+}
+}
+   
 ?>
+<h1>login</h1>
+
+<form action="" method="post">
+Email: <input type="email" name="email" required><br> <br>
+Password: <input type="password" name="password" required><br> <br>
+<button>login</button>
+
+</form>
+
+
+<?php 
+require_once 'footer.php';
+?>
+
+
+

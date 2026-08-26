@@ -1,20 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="contact.css">
+</head>
+<body>
+  
 <?php
 
 require_once "header.php";
+require_once "connection.php";
+
 
 ?>
-
-
-<h1>contact page</h1>
-<p>
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque ipsum a cum nemo nihil amet expedita, quos esse incidunt enim,
-     voluptatum hic illum modi. Rem aspernatur saepe officia natus quaerat!
-</p>
-
-
+<h1 class="contact">This is contact page</h1>
 <?php
 
 require_once "footer.php";
 
 ?>
+</body>
+</html>
+
+
+
+
+
+
 
