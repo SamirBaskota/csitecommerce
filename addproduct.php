@@ -1,43 +1,52 @@
-<?php
 
-require_once "header.php";
-require_once "connection.php";
+<?php 
+require_once 'header.php';
+require_once 'connection.php';
+
 if(!isset($_SESSION['auth'])){
-    header("location: login.php");
+    header("Location:login.php");
 }
-// if(!empty($_POST))
-// {
-//     $Productname = $_POST['Productname'];
-//     $price = $_POST['price'];
-//     $quantity = $_POST['quantity'];
-//     $color = $_POST['color'];
-//     $sql="INSERT INTO addproduct(Productname,price,quantity,color) values('$Productname','$price','$quantity','$color')";
-//     $result=mysqli_query($conn,$sql);
-//     if($result)
-//         {
-//         echo"products add successfully";
-//         }
-//         else
-//         {
-//         echo"products  not add successfully";
-//         }
-    
-// }
+$query="SELECT * FROM category";
+$data=mysqli_query($conn, $query);
+
+if(!empty($_POST)){
+    $userId=$_SESSION['auth']['uid'];
+    $category_id=$_POST['category_id'];
+    $title=$_POST['title'];
+    $quantity=$_POST['quantity'];
+    $price=$_POST['price'];
+    $description=$_POST['description'];
+    $image=$_FILES['image']['name'];
+    $tmp_name=$_FILES['image']['tmp_name'];
+    if(!move_uploaded_file($tmp_name, "uploads/$image")){
+        echo "Image upload failed";
+    }
+    $query="INSERT INTO products(user_id, category_id, title, quantity, price, 
+    description, image) 
+    VALUES ('$userId', '$category_id', '$title', '$quantity',
+     '$price', '$description', '$image')";
+    $result =mysqli_query($conn, $query);
+    if($result){
+        echo "Product added successfully";
+    }else{
+        echo "Error adding product: " . mysqli_error($conn);
+    }
+}
+
 ?>
-<h1>welcome to add products from category</h1>
-<form action="" method="post">
-Product Name: <input type="text" name="Productname" required><br>
-price: <input type="number" name="price" required><br>
-quantity: <input type="number" name="quantity" required><br>
-color: <input type="text" name="color" required><br>
-
-
-<button>add products</button>
+<form method="post" action="" enctype="multipart/form-data">
+    Category: <select name="category_id" required>
+        <option value="">Select Category</option>
+        <?php foreach($data as $cat){ ?>
+            <option value="<?php echo $cat['cid']; ?>">
+                <?php echo $cat['name']; ?>
+            </option>
+        <?php }; ?>
+    </select> <br>
+    Title: <input type="text" name="title" required><br>
+    Quantity: <input type="number" name="quantity" required><br>
+    Price: <input type="number" name="price" required><br>
+    Description: <textarea name="description" required></textarea><br>
+    Image: <input type="file" name="image" required><br> <br>
+    <button> Add Product</button>
 </form>
-
-
-<?php
-
-require_once "footer.php";
-
-?>
