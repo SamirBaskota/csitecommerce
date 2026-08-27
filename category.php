@@ -12,14 +12,18 @@ if(!empty($_POST))
     $result=mysqli_query($conn,$sql);
     if($result)
         {
-        echo"category add successfully";
+            $_SESSION['success'] = "category added successfully";
+            header("Location: category.php");
         }
         else
         {
-        echo"category  not add successfully";
+            $_SESSION['success'] = "category not added successfully";
+            header("Location: category.php"); 
         }
     
 }
+$query = "SELECT * from category";
+$cat =mysqli_query($conn,$query);
 ?>
 
 
@@ -28,6 +32,20 @@ if(!empty($_POST))
 Name: <input type="text" name="name" required><br>
 <button>add category</button>
 </form>
+<table border="1" width="100%">
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+    </tr>
+    <?php while($row = mysqli_fetch_assoc($cat)) : ?>
+        <tr>
+            <td><?php echo $row['cid']; ?></td>
+            <td><?php echo $row['name']; ?></td>
+
+        </tr>
+        <?php endwhile; ?>
+
+</table>
 
 
 <?php
