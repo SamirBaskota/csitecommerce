@@ -1,19 +1,24 @@
-<?php
+<?php 
+require_once 'header.php';
+require_once 'connection.php';
 
-require_once "header.php";
-
+$sql="SELECT * FROM products";
+$result=mysqli_query($conn,$sql);
 ?>
 
+<h1>Product List</h1>
 
-<h1>welcome to home page</h1>
-<p>
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque ipsum a cum nemo nihil amet expedita, quos esse incidunt enim,
-     voluptatum hic illum modi. Rem aspernatur saepe officia natus quaerat!
-</p>
+<ul>
+    <?php while($row = mysqli_fetch_assoc($result)): ?>
+        <li>
+            <img src="uploads/<?php echo $row['image']?>" width="200" height="200" alt="">
+            <h2><?php echo $row['title']; ?></h2>
+            <p><?php echo $row['description']; ?></p>
+            <p>Price: $<?php echo $row['price']; ?></p>
+        </li>
+    <?php endwhile; ?>
+</ul>
 
-
-<?php
-
-require_once "footer.php";
-
+<?php 
+require_once 'footer.php';
 ?>
