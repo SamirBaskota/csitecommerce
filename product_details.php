@@ -1,19 +1,25 @@
 <?php
+require_once 'header.php';
+require_once 'connection.php';
 
-require_once "header.php";
+$id=$_GET['id'];
 
+$sql="SELECT users.uid,users.name as username,category.*,products.* FROM products
+JOIN users ON users.uid=products.user_id 
+JOIN category ON category.cid=products.category_id
+WHERE products.pid='$id'";
+
+$result=mysqli_query($conn,$sql);
+$product = mysqli_fetch_assoc($result);
 ?>
 
-
-<h1>products_details page</h1>
+<h1>Product Details</h1>
+<h2><?php echo $product['title']; ?></h2>
+  <img src="uploads/<?php echo $product['image']?>" 
+            width="200" height="200" alt="">
 <p>
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque ipsum a cum nemo nihil amet expedita, quos esse incidunt enim,
-     voluptatum hic illum modi. Rem aspernatur saepe officia natus quaerat!
+    Category: <?php echo $product['name']; ?>
+    Vendor: <?php echo $product['username']; ?>
 </p>
-
-
-<?php
-
-require_once "footer.php";
-
-?>
+<p>Price: $<?php echo $product['price']; ?></p>
+<p>Description: <?php echo $product['description']; ?></p>

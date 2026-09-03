@@ -11,10 +11,16 @@ $result=mysqli_query($conn,$sql);
 <ul>
     <?php while($row = mysqli_fetch_assoc($result)): ?>
         <li>
-            <img src="uploads/<?php echo $row['image']?>" width="200" height="200" alt="">
+            <img src="uploads/<?php echo $row['image']?>" 
+            width="200" height="200" alt="">
             <h2><?php echo $row['title']; ?></h2>
             <p><?php echo $row['description']; ?></p>
             <p>Price: $<?php echo $row['price']; ?></p>
+            <p>
+                <a href="product_details.php?id=<?php echo $row['pid']; ?>">
+                    Product Details
+                </a> 
+            </p>
         </li>
     <?php endwhile; ?>
 </ul>
